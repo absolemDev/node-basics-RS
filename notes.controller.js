@@ -41,7 +41,19 @@ async function removeNote(id) {
   const removedNote = notes.find((n) => n.id === id);
   if (removedNote) {
     await saveNotes(notes.filter((n) => n.id !== id));
-    console.log(chalk.red(`Note "${removedNote.title}" was deleted`));
+    console.log(chalk.red(`Note "${removedNote.id}" was deleted`));
+  } else {
+    console.log(chalk.red(`Note with ID: "${id}" - not faund`));
+  }
+}
+
+async function editNote(id, title) {
+  const notes = await getNotes();
+  const removedNote = notes.find((n) => n.id === id);
+  if (removedNote) {
+    removedNote.title = title;
+    await saveNotes(notes);
+    console.log(chalk.green(`Note "${removedNote.title}" was edit`));
   } else {
     console.log(chalk.red(`Note with ID: "${id}" - not faund`));
   }
@@ -51,4 +63,5 @@ module.exports = {
   addNote,
   printNotes,
   removeNote,
+  editNote,
 };
